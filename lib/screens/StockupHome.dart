@@ -22,13 +22,56 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<Widget> _pages = [
+    TopGainersPage(),
+    TopLosersPage(),
+    SearchPage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('StockUp'),
       ),
-      child: Center(child: Text("StockUp")),
+      child: CupertinoTabScaffold(
+        tabBar: CupertinoTabBar(
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.arrow_up_circle),
+                label: "Top Gainers"),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.arrow_down_circle),
+                label: "Top Losers"),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.search), label: "Search"),
+          ],
+        ),
+        tabBuilder: (BuildContext context, index) {
+          return _pages[index];
+        },
+      ),
     );
+  }
+}
+
+class TopGainersPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text("Top Gainers Page"));
+  }
+}
+
+class TopLosersPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text("Top Losers Page"));
+  }
+}
+
+class SearchPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text("Search Page"));
   }
 }
