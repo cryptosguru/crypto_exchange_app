@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<List> getQuotes(String symbol) async {
+Future<Map<String, dynamic>> getQuotes(String symbol) async {
   var getUri =
       'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest' +
           '?symbol=' +
@@ -17,8 +17,7 @@ Future<List> getQuotes(String symbol) async {
 
   if (_response.statusCode == 200) {
     Map<String, dynamic> map = json.decode(_response.body);
-    List<dynamic> data = map["data"];
-    return data;
+    return map;
   } else {
     throw Exception("Failed to load data");
   }
