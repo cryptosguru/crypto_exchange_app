@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:stockup/dataHandler/FetchCrypto.dart' as FetchCrypto;
+import 'package:align_positioned/align_positioned.dart';
 
 class StockupHome extends StatelessWidget {
   @override
@@ -70,8 +72,27 @@ class TopLosersPage extends StatelessWidget {
 }
 
 class SearchPage extends StatelessWidget {
+  var symbol = 'BTC';
+  late Future<Map<String, dynamic>> cryptoData = FetchCrypto.getQuotes(symbol);
+
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("Search Page"));
+    return Center(
+      child: FutureBuilder<Map<String, dynamic>>(
+        future: cryptoData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Center(
+                child: Text("Price of $symbol is " +
+                    snapshot.data!["data"][symbol]["quote"]["USD"]["price"]
+                        .toString()));
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+
+          return CupertinoActivityIndicator();
+        },
+      ),
+    );
   }
 }
