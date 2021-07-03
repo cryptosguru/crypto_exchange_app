@@ -1,6 +1,7 @@
 ## StockUp
 
 Check your favorite cryptocurrency prices in one place! 
+
 StockUp uses the CoinMarketCap API for crypto market data.
 
 ## Project Status
